@@ -1,0 +1,36 @@
+@import "../../scss/var";
+.call {
+  position: relative;
+  height: 100%;
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    .user-video {
+      width: 100%;
+      height: 100%;
+    }
+    .my-video {
+      position: absolute;
+      top: 0.3rem;
+      right: 20%;
+      width: 15rem;
+      box-shadow: 0 0 2px 2px #fff;
+    }
+  }
+  .hang-up {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    background-color: $danger;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    cursor: pointer;
+  }
+}

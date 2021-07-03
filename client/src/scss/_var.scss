@@ -1,0 +1,43 @@
+$dark: #0f0c3f;
+$blue: #544cba;
+$lightBlue: #3c386b;
+$gray: #f5f3ff;
+$danger: #ff1744;
+$success: #76ff03;
+$warning: #ffeb3b;
+
+$transition: all 0.3s linear;
+
+@mixin screen($breakpoint, $size: 1200px) {
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 368px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tablet {
+    @media only screen and (max-width: 768px) {
+      @content;
+    }
+  }
+  @if $breakpoint == laptop {
+    @media only screen and (max-width: 992px) {
+      @content;
+    }
+  }
+  @if $breakpoint == desktop {
+    @media only screen and (min-width: 1200px) {
+      @content;
+    }
+  }
+  @if $breakpoint == custom {
+    @media only screen and (max-width: $size) {
+      @content;
+    }
+  }
+  @if $breakpoint == custom-large {
+    @media only screen and (min-width: $size) {
+      @content;
+    }
+  }
+}

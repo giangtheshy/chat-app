@@ -1,0 +1,28 @@
+@import "../../scss/var";
+.chat {
+  width: 65%;
+  height: 80vh;
+  &-header {
+    height: 5rem;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    &__left {
+      display: flex;
+      align-items: center;
+      .icon {
+        color: $success;
+        font-size: 1.5rem;
+      }
+    }
+    &__right {
+      .icon {
+        color: $success;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+@import "../../scss/var";
+
+.login {
+  width: 80%;
+  height: 80%;
+  background-color: $dark;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  margin: 4rem auto;
+
+  .title {
+    color: #fff;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  form {
+    margin: 1rem 0;
+    .text-input {
+      width: 100%;
+      margin-bottom: 2rem;
+      display: block;
+      input {
+        width: 100%;
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.3rem 2rem;
+        font-size: 1.1rem;
+        background-color: #eee;
+      }
+    }
+    .btn-submit {
+      display: block;
+      margin: 1rem auto;
+      border: 1px solid $warning;
+      color: $warning;
+      background: transparent;
+      border-radius: 0.3rem;
+      padding: 0.3rem 1rem;
+      cursor: pointer;
+    }
+    .forgot {
+      margin: 1rem auto;
+      display: block;
+      color: $blue;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+    }
+    .forgot:hover {
+      text-decoration: underline;
+    }
+  }
+}
