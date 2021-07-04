@@ -10,6 +10,7 @@ import { User } from "../../types";
 
 // const connectionRef = useRef<any>();
 
+// Hàm này được thực hiện khi người nhận cuộc gọi bấm nút đồng ý
 function* answerCall({ payload }: ActionRedux) {
   const callState: ICall = yield select((state) => state.call);
   yield put(setCall({ callAccepted: true }));
@@ -17,24 +18,29 @@ function* answerCall({ payload }: ActionRedux) {
   const peer = new Peer({ initiator: false, trickle: false, stream: callState.stream });
 
   peer.on("signal", (data) => {
+    console.log({ data });
+
     callState.socket?.emit("answerCall", { signal: data, to: callState.call?.from });
   });
 
   peer.on("stream", (currentStream) => {
     payload.userVideo.current.srcObject = currentStream;
   });
+  console.log({ signalAnswer: callState.call?.signal });
 
   peer.signal(callState.call?.signal);
 
   payload.connectionRef.current = peer;
 }
 
+// Hàm này được thực hiện khi click nút gọi
 function* callUser({ payload }: ActionRedux) {
   const callState: ICall = yield select((state) => state.call);
   const user: User = yield select((state) => state.user.user);
   const peer = new Peer({ initiator: true, trickle: false, stream: callState.stream });
 
   peer.on("signal", (data) => {
+    console.log({ data });
     callState.socket?.emit("callUser", {
       userToCall: payload.id,
       signalData: data,
@@ -44,12 +50,17 @@ function* callUser({ payload }: ActionRedux) {
     });
   });
 
+  // Sự kiện này không được gọi khi partners bấm nút trả lời
   peer.on("stream", (currentStream) => {
     payload.userVideo.current.srcObject = currentStream;
   });
+
+  // Sự kiện này được gọi khi partners bấm nút trả lời
   callState.socket?.on("callAccepted", (signal) => {
-    store.dispatch(setCall({ callAccepted: true }));
+    console.log({ signal });
+
     peer.signal(signal);
+    // store.dispatch(setCall({ callAccepted: true }));
   });
 
   payload.connectionRef.current = peer;

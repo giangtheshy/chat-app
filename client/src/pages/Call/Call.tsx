@@ -1,18 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
-import Peer from "simple-peer";
 import { FiPhoneOff } from "react-icons/fi";
 import { answerCall, callUser, leaveCall, setCall } from "../../store/actions/call.action";
 import { RootState } from "../../store/reducers";
 import { ICall } from "../../store/reducers/call.reducer";
 import "./Call.scss";
-import { User } from "../../types";
 
 const Call = () => {
   const call: ICall = useSelector((state: RootState) => state.call);
   const socket = useSelector((state: RootState) => state.call.socket);
-  const user: User = useSelector((state: RootState) => state.user.user);
 
   const history = useHistory();
   const search = useLocation().search;
@@ -45,8 +42,7 @@ const Call = () => {
   }, []);
   useEffect(() => {
     if (call.stream && id) {
-      handleCallUser(id);
-      // handleClickCallUser();
+      handleClickCallUser();
     }
   }, [call.stream, id]);
   useEffect(() => {
@@ -55,30 +51,6 @@ const Call = () => {
       handleClickAnswer();
     }
   }, [answer, id]);
-
-  function handleCallUser(id: string) {
-    const peer = new Peer({ initiator: true, trickle: false, stream: call.stream });
-
-    peer.on("signal", (data) => {
-      socket?.emit("callUser", {
-        userToCall: id,
-        signalData: data,
-        from: call.me,
-        name: user.name,
-        avatar: user.avatar,
-      });
-    });
-
-    peer.on("stream", (currentStream) => {
-      userVideo.current.srcObject = currentStream;
-    });
-    socket?.on("callAccepted", (signal) => {
-      dispatch(setCall({ callAccepted: true }));
-      peer.signal(signal);
-    });
-
-    connectionRef.current = peer;
-  }
 
   const handleClickCallUser = () => {
     dispatch(callUser(id, userVideo, connectionRef));
