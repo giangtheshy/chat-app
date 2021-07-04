@@ -46,7 +46,7 @@ const Call = () => {
   }, []);
   useEffect(() => {
     if (call.stream && id) {
-      handleClickCallUser();
+      handleClickCallUser(id);
     }
   }, [call.stream, id]);
   useEffect(() => {
@@ -79,8 +79,7 @@ const Call = () => {
     connectionRef.current = peer;
   }
 
-  // Hàm này được thực hiện khi click nút gọi
-  function callUser() {
+  function callUser(id: string) {
     const peer = new Peer({ initiator: true, trickle: false, stream: call.stream });
 
     peer.on("signal", (data) => {
@@ -94,14 +93,12 @@ const Call = () => {
       });
     });
 
-    // Sự kiện này không được gọi khi partners bấm nút trả lời
     peer.on("stream", (currentStream) => {
       console.log({ currentStream });
 
       userVideo.current.srcObject = currentStream;
     });
 
-    // Sự kiện này được gọi khi partners bấm nút trả lời
     socket?.on("callAccepted", (signal) => {
       console.log({ signal });
 
@@ -112,7 +109,7 @@ const Call = () => {
     connectionRef.current = peer;
   }
 
-  function* leaveCall() {
+  function leaveCall() {
     dispatch(setCall({ callEnded: true }));
 
     connectionRef.current.destroy();
@@ -120,9 +117,9 @@ const Call = () => {
     window.location.href = "/message";
   }
 
-  const handleClickCallUser = () => {
+  const handleClickCallUser = (id: string) => {
     // dispatch(callUser(id, userVideo, connectionRef));
-    callUser();
+    callUser(id);
   };
 
   const handleClickHangUp = () => {
