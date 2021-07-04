@@ -60,7 +60,7 @@ function* callUser({ payload }: ActionRedux) {
     console.log({ signal });
 
     peer.signal(signal);
-    // store.dispatch(setCall({ callAccepted: true }));
+    store.dispatch(setCall({ callAccepted: true }));
   });
 
   payload.connectionRef.current = peer;
