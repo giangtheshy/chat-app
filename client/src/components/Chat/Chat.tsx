@@ -17,7 +17,7 @@ const Chat: React.FC<Props> = ({ item }) => {
           <BsDot className="icon" />
         </div>
         <div className="chat-header__right">
-          <VscDeviceCameraVideo className="icon" onClick={() => history.push(`/call?id=${item?.socket}`)} />
+          <VscDeviceCameraVideo className="icon" onClick={() => history.push(`/call?id=${item?._id}`)} />
         </div>
       </div>
       <div className="chat-content"></div>
