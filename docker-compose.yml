@@ -6,7 +6,7 @@ services:
     restart: always
     build:
       context: ./server
-      dockerfile: ${DOCKERFILE}
+      dockerfile: ${DOCKERFILE_SERVER}
     container_name: server-chat
     volumes:
       - /app/node_modules
@@ -24,7 +24,7 @@ services:
     restart: always
     build:
       context: ./client
-      dockerfile: ${DOCKERFILE}
+      dockerfile: ${DOCKERFILE_CLIENT}
     volumes:
       - /app/node_modules
       - ./client:/app
@@ -45,7 +45,7 @@ services:
       - client
     build:
       context: ./nginx
-      dockerfile: ${DOCKERFILE}
+      dockerfile: ${DOCKERFILE_NGINX}
       network: host
       args:
         - CERTBOT_EMAIL=nhockrong98@gmail.com

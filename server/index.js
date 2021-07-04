@@ -24,7 +24,7 @@ const PORT = process.env.PORT || 5000
 app.use(cors({
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  origin: process.env.NODE_ENV === "production" ? "https://khumuivietnam.com" : "http://localhost",
+  origin: process.env.NODE_ENV === "production" ? "http://20.58.163.235" : "http://localhost",
 }))
 app.set("trust proxy", 1);
 app.use(cookieParser());
@@ -38,7 +38,7 @@ app.get('/api/v1', (req, res) => {
 app.use("/api/v1/user", userRoute);
 
 connection
-  .then(() => server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`)))
+  .then(() => server.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
   .catch((err) => {
     console.log(err);
   });

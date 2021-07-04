@@ -1,8 +1,10 @@
 import axios from "axios";
 import store from "../store/store";
 
+export const ENTRY_POINT = process.env.NODE_ENV==="production" ?"http://20.58.163.235":"http://localhost"
+
 const axiosInstance = axios.create({
-  baseURL: process.env.NODE_ENV === "production" ? "https://khumuivietnam.herokuapp.com/" : "http://localhost/api/v1",
+  baseURL: `${ENTRY_POINT}/api/v1`,
 });
 
 axiosInstance.interceptors.request.use(function (config) {

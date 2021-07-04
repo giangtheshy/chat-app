@@ -20,8 +20,9 @@ import { get } from "./apis";
 import { getUser, setLogin, setToken } from "./store/actions/user.action";
 import { FiPhoneCall } from "react-icons/fi";
 import Avatar from "./components/Custom/Avatar/Avatar";
+import { ENTRY_POINT } from "./apis/axios";
 
-const socket = io("http://localhost", { path: "/api/v1/sockjs-node" });
+const socket = io(ENTRY_POINT, { path: "/api/v1/sockjs-node" });
 
 const App = () => {
   const isLogged = useSelector((state: RootState) => state.user.isLogged);
