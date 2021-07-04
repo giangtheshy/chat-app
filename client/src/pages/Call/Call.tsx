@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
-import { FiPhoneOff } from "react-icons/fi";
-import { answerCall, callUser, leaveCall, setCall } from "../../store/actions/call.action";
+import { useHistory, useLocation } from "react-router-dom";
+import { FiPhoneCall, FiPhoneOff } from "react-icons/fi";
+import { setCall } from "../../store/actions/call.action";
 import { RootState } from "../../store/reducers";
 import { ICall } from "../../store/reducers/call.reducer";
 import Peer from "simple-peer";
@@ -10,6 +10,7 @@ import "./Call.scss";
 import { User } from "../../types";
 
 const Call = () => {
+  const [isCall, setIsCall] = useState(false);
   const call: ICall = useSelector((state: RootState) => state.call);
   const socket = useSelector((state: RootState) => state.call.socket);
   const user: User = useSelector((state: RootState) => state.user.user);
@@ -31,64 +32,45 @@ const Call = () => {
       connectionRef.current.destroy();
       window.location.href = "/message";
     });
-    // socket?.on("redirect", () => {
-    //   history.push("/call?accept=true");
-    // });
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((currentStream) => {
       dispatch(setCall({ stream: currentStream }));
 
       myVideo.current.srcObject = currentStream;
     });
-    // return () => {
-    //   socket?.off("callEnded");
-    //   socket?.off("redirect");
-    // };
   }, []);
-  // useEffect(() => {
-  //   if (call.stream && id) {
-  //     handleClickCallUser();
-  //   }
-  // }, [call.stream, id]);
-  // useEffect(() => {
-  //   if (answer) {
-
-  //     handleClickAnswer();
-  //   }
-  // }, [answer, id]);
-
-  function answerCall() {
+  useEffect(() => {
+    if (answer) {
+      handleClickAnswer();
+    }
+  }, [answer]);
+  function handleClickAnswer() {
     dispatch(setCall({ callAccepted: true }));
 
     const peer = new Peer({ initiator: false, trickle: false, stream: call.stream });
 
     peer.on("signal", (data) => {
-      console.log({ data });
-
       call.socket?.emit("answerCall", { signal: data, to: call.call?.from });
     });
 
     peer.on("stream", (currentStream) => {
-      console.log({ currentStreamAnswer: currentStream });
-
       userVideo.current.srcObject = currentStream;
     });
-    console.log({ signalAnswer: call.call?.signal });
-
     peer.signal(call.call?.signal);
 
     connectionRef.current = peer;
   }
 
-  function callUser() {
+  function handleClickCallUser() {
+    setIsCall(true);
     const peer = new Peer({ initiator: true, trickle: false, stream: call.stream });
 
     peer.on("signal", (data) => {
-      console.log({ data });
       socket?.emit("callUser", {
         userToCall: id,
         signalData: data,
         from: call.me,
         name: user.name,
+        uid: user._id,
         avatar: user.avatar,
       });
     });
@@ -100,8 +82,6 @@ const Call = () => {
     });
 
     socket?.on("callAccepted", (signal) => {
-      console.log({ signal });
-
       peer.signal(signal);
       dispatch(setCall({ callAccepted: true }));
     });
@@ -109,7 +89,8 @@ const Call = () => {
     connectionRef.current = peer;
   }
 
-  function leaveCall() {
+  function handleClickHangUp() {
+    socket?.emit("callEnded", { to: id });
     dispatch(setCall({ callEnded: true }));
 
     connectionRef.current.destroy();
@@ -117,21 +98,6 @@ const Call = () => {
     window.location.href = "/message";
   }
 
-  const handleClickCallUser = () => {
-    // dispatch(callUser(id, userVideo, connectionRef));
-    callUser();
-  };
-
-  const handleClickHangUp = () => {
-    socket?.emit("callEnded", { to: id });
-    // dispatch(leaveCall(connectionRef));
-    leaveCall();
-  };
-  const handleClickAnswer = () => {
-    // dispatch(answerCall(userVideo, connectionRef));
-    // socket?.emit("redirect", { to: call.call?.from });
-    answerCall();
-  };
   return (
     <div className="call">
       <div className="video-container">
@@ -144,12 +110,11 @@ const Call = () => {
           <FiPhoneOff />
         </button>
       )}
-      <button className="call" onClick={handleClickCallUser}>
-        <FiPhoneOff /> Call
-      </button>
-      <button className="answer" onClick={handleClickAnswer}>
-        <FiPhoneOff /> Answer Call
-      </button>
+      {!call.callAccepted  && (
+        <button className={`call ${isCall?'calling':''}`} onClick={handleClickCallUser}>
+          <FiPhoneCall />
+        </button>
+      )}
     </div>
   );
 };

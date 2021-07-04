@@ -3,7 +3,8 @@ export type TypeCall = {
   from: string;
   name: string;
   signal: any;
-  avatar:string
+  avatar: string;
+  uid: string;
 };
 
 export type User = {

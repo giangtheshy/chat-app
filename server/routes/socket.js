@@ -9,8 +9,8 @@ module.exports = (io) => {
       userCtl.offlineUser(socket.id)
     });
 
-    socket.on("callUser", async ({ userToCall, signalData, from, name, avatar }) => {
-      io.to(await userCtl.getSocket(userToCall)).emit("callUser", { signal: signalData, from, name, avatar });
+    socket.on("callUser", async ({ userToCall, signalData, from, name, avatar, uid }) => {
+      io.to(await userCtl.getSocket(userToCall)).emit("callUser", { signal: signalData, from, name, avatar, uid });
     });
     socket.on("callEnded", async ({ to }) => {
       socket.to(await userCtl.getSocket(to)).emit("callEnded");

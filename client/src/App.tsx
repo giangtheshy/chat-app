@@ -35,8 +35,8 @@ const App = () => {
   useEffect(() => {
     socket.on("me", (id) => dispatch(setCall({ me: id })));
 
-    socket.on("callUser", ({ from, name: callerName, signal, avatar }) => {
-      dispatch(setCall({ call: { isReceivingCall: true, from, name: callerName, signal, avatar } }));
+    socket.on("callUser", ({ from, name: callerName, signal, avatar, uid }) => {
+      dispatch(setCall({ call: { isReceivingCall: true, from, name: callerName, signal, avatar, uid } }));
     });
 
     dispatch(setCall({ socket }));
@@ -72,7 +72,7 @@ const App = () => {
               <div className={`accept`}>
                 <Avatar avatar={call?.call?.avatar} />
                 <h4 className="call-name">Calling ...</h4>
-                <Link to="/call?answer=true" className="accept-btn">
+                <Link to={`/call?id=${call.call.uid}&&answer=true`} className="accept-btn">
                   <FiPhoneCall />
                 </Link>
               </div>

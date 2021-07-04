@@ -35,10 +35,21 @@
   }
   .call {
     @extend .hang-up;
-    left: 70% !important;
+    background-color: $success !important;
+    border: 1px solid #fff;
+    transition: $transition;
+    &.calling {
+      transform: scale(2);
+      bottom: 5rem;
+      animation: calling 1s infinite ease-in-out;
+    }
   }
-  .answer {
-    @extend .hang-up;
-    left: 90% !important;
+}
+@keyframes calling {
+  0% {
+    box-shadow: 0 0 1px 3px $success;
+  }
+  50% {
+    box-shadow: 0 0 7px 15px $success;
   }
 }
