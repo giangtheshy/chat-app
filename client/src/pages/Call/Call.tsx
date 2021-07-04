@@ -38,11 +38,11 @@ const Call = () => {
       myVideo.current.srcObject = currentStream;
     });
   }, []);
-  // useEffect(() => {
-  //   if (answer === "true") {
-  //     handleClickAnswer();
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (answer === "true" && call.stream) {
+      handleClickAnswer();
+    }
+  }, [answer, call.stream]);
   function handleClickAnswer() {
     setIsCall(true);
     dispatch(setCall({ callAccepted: true }));
@@ -116,11 +116,11 @@ const Call = () => {
           <FiPhoneCall />
         </button>
       )}
-      {!isCall && call.call?.isReceivingCall && (
+      {/* {!isCall && call.call?.isReceivingCall && (
         <button className={`call calling`} onClick={handleClickAnswer}>
           <FiPhoneCall />
         </button>
-      )}
+      )} */}
     </div>
   );
 };
