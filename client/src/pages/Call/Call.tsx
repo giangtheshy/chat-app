@@ -111,12 +111,12 @@ const Call = () => {
           <FiPhoneOff />
         </button>
       )}
-      {!call.callAccepted && (
+      {!call.callAccepted && !call.call?.isReceivingCall && (
         <button className={`call ${isCall ? "calling" : ""}`} onClick={handleClickCallUser}>
           <FiPhoneCall />
         </button>
       )}
-      {!isCall &&call.call?.isReceivingCall && (
+      {!isCall && call.call?.isReceivingCall && (
         <button className={`call calling`} onClick={handleClickAnswer}>
           <FiPhoneCall />
         </button>
