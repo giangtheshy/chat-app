@@ -144,10 +144,10 @@ const Call = () => {
           <FiPhoneOff />
         </button>
       )}
-      <button className="hang-up" onClick={handleClickCallUser}>
+      <button className="call" onClick={handleClickCallUser}>
         <FiPhoneOff /> Call
       </button>
-      <button className="hang-up" onClick={handleClickAnswer}>
+      <button className="answer" onClick={handleClickAnswer}>
         <FiPhoneOff /> Answer Call
       </button>
     </div>

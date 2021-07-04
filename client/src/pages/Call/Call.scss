@@ -33,4 +33,12 @@
     border: none;
     cursor: pointer;
   }
+  .call {
+    @extend .hang-up;
+    left: 70% !important;
+  }
+  .answer {
+    @extend .hang-up;
+    left: 90% !important;
+  }
 }
