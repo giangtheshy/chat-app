@@ -42,7 +42,7 @@ const Call = () => {
     if (answer) {
       handleClickAnswer();
     }
-  }, [answer]);
+  }, []);
   function handleClickAnswer() {
     dispatch(setCall({ callAccepted: true }));
 
@@ -110,8 +110,8 @@ const Call = () => {
           <FiPhoneOff />
         </button>
       )}
-      {!call.callAccepted  && (
-        <button className={`call ${isCall?'calling':''}`} onClick={handleClickCallUser}>
+      {!call.callAccepted && (
+        <button className={`call ${isCall ? "calling" : ""}`} onClick={handleClickCallUser}>
           <FiPhoneCall />
         </button>
       )}
