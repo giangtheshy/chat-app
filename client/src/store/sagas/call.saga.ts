@@ -44,18 +44,19 @@ function* callUser({ payload }: ActionRedux) {
     });
   });
 
-  peer.on("stream", (currentStream) => {
-    console.log({ video: payload.userVideo.current });
-    console.log({ currentStream });
-
-    payload.userVideo.current.srcObject = currentStream;
-  });
   callState.socket?.on("callAccepted", (signal) => {
     peer.signal(signal);
-    store.dispatch(setCall({ callAccepted: true }));
+    peer.on("stream", (currentStream) => {
+      payload.userVideo.current.srcObject = currentStream;
+    });
+    // store.dispatch(setCall({ callAccepted: true }));
+    setAccept();
   });
 
   payload.connectionRef.current = peer;
+}
+function* setAccept() {
+  yield put(setCall({ callAccepted: true }));
 }
 function* leaveCall({ payload }: ActionRedux) {
   yield put(setCall({ callEnded: true }));
