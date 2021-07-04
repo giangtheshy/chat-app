@@ -43,6 +43,11 @@ const Call = () => {
       handleClickAnswer();
     }
   }, [answer, call.stream]);
+  useEffect(() => {
+    if (id && call.stream) {
+      handleClickCallUser();
+    }
+  }, [id, call.stream]);
   function handleClickAnswer() {
     setIsCall(true);
     dispatch(setCall({ callAccepted: true }));
@@ -111,11 +116,11 @@ const Call = () => {
           <FiPhoneOff />
         </button>
       )}
-      {!call.callAccepted && !call.call?.isReceivingCall && (
+      {/* {!call.callAccepted && !call.call?.isReceivingCall && (
         <button className={`call ${isCall ? "calling" : ""}`} onClick={handleClickCallUser}>
           <FiPhoneCall />
         </button>
-      )}
+      )} */}
       {/* {!isCall && call.call?.isReceivingCall && (
         <button className={`call calling`} onClick={handleClickAnswer}>
           <FiPhoneCall />
