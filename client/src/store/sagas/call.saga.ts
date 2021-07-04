@@ -49,15 +49,12 @@ function* callUser({ payload }: ActionRedux) {
     peer.on("stream", (currentStream) => {
       payload.userVideo.current.srcObject = currentStream;
     });
-    // store.dispatch(setCall({ callAccepted: true }));
-    setAccept();
+    store.dispatch(setCall({ callAccepted: true }));
   });
 
   payload.connectionRef.current = peer;
 }
-function* setAccept() {
-  yield put(setCall({ callAccepted: true }));
-}
+
 function* leaveCall({ payload }: ActionRedux) {
   yield put(setCall({ callEnded: true }));
 
