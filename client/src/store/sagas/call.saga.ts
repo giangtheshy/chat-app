@@ -44,12 +44,12 @@ function* callUser({ payload }: ActionRedux) {
     });
   });
 
+  peer.on("stream", (currentStream) => {
+    payload.userVideo.current.srcObject = currentStream;
+  });
   callState.socket?.on("callAccepted", (signal) => {
-    peer.signal(signal);
-    peer.on("stream", (currentStream) => {
-      payload.userVideo.current.srcObject = currentStream;
-    });
     store.dispatch(setCall({ callAccepted: true }));
+    peer.signal(signal);
   });
 
   payload.connectionRef.current = peer;
