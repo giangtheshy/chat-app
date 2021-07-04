@@ -38,12 +38,13 @@ const Call = () => {
       myVideo.current.srcObject = currentStream;
     });
   }, []);
-  useEffect(() => {
-    if (answer === "true") {
-      handleClickAnswer();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (answer === "true") {
+  //     handleClickAnswer();
+  //   }
+  // }, []);
   function handleClickAnswer() {
+    setIsCall(true);
     dispatch(setCall({ callAccepted: true }));
 
     const peer = new Peer({ initiator: false, trickle: false, stream: call.stream });
@@ -112,6 +113,11 @@ const Call = () => {
       )}
       {!call.callAccepted && (
         <button className={`call ${isCall ? "calling" : ""}`} onClick={handleClickCallUser}>
+          <FiPhoneCall />
+        </button>
+      )}
+      {!isCall && (
+        <button className={`call calling`} onClick={handleClickAnswer}>
           <FiPhoneCall />
         </button>
       )}
