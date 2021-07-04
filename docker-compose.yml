@@ -49,7 +49,7 @@ services:
       network: host
       args:
         - CERTBOT_EMAIL=nhockrong98@gmail.com
-        - DOMAIN_LIST=library-mern.tk
+        - DOMAIN_LIST=phim-pro-azure.tk
     ports:
       - "80:80"
       - "443:443"
