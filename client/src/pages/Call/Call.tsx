@@ -27,6 +27,9 @@ const Call = () => {
       connectionRef.current.destroy();
       window.location.href = "/message";
     });
+    socket?.on("redirect", () => {
+      history.push("/call?accept=true");
+    });
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((currentStream) => {
       dispatch(setCall({ stream: currentStream }));
 
@@ -34,16 +37,20 @@ const Call = () => {
     });
     return () => {
       socket?.off("callEnded");
+      socket?.off("redirect");
     };
   }, []);
   useEffect(() => {
     if (call.stream && id) {
       handleClickCallUser();
     }
+  }, [call.stream, id]);
+  useEffect(() => {
     if (answer) {
+      socket?.emit("redirect", { to: call.call?.from });
       handleClickAnswer();
     }
-  }, [call.stream, answer, id]);
+  }, [answer, id]);
 
   const handleClickCallUser = () => {
     dispatch(callUser(id, userVideo, connectionRef));

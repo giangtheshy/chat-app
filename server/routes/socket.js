@@ -18,5 +18,8 @@ module.exports = (io) => {
     socket.on("answerCall", (data) => {
       io.to(data.to).emit("callAccepted", data.signal)
     });
+    socket.on("redirect", ({ to }) => {
+      io.to(to).emit("redirect")
+    });
   });
 }

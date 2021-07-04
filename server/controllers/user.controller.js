@@ -75,8 +75,8 @@ const userController = {
         httpOnly: true,
         path: "/api/v1/user/refresh_token",
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        secure: process.env.NODE_ENV === "production" ? true : false,
+        // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        // secure: process.env.NODE_ENV === "production" ? true : false,
       });
 
       res.status(200).json({ message: "Login successfully." });
@@ -219,7 +219,7 @@ const userController = {
   },
   getSocket: async (id) => {
     try {
-      const user=await User.findById(id);
+      const user = await User.findById(id);
       return user.socket;
     } catch (error) {
       console.log(error.message);
