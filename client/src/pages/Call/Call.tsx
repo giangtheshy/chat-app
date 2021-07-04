@@ -39,7 +39,7 @@ const Call = () => {
     });
   }, []);
   useEffect(() => {
-    if (answer) {
+    if (answer === "true") {
       handleClickAnswer();
     }
   }, []);
