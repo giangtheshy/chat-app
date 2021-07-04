@@ -24,6 +24,8 @@ function* answerCall({ payload }: ActionRedux) {
   });
 
   peer.on("stream", (currentStream) => {
+    console.log({ currentStreamAnswer: currentStream });
+
     payload.userVideo.current.srcObject = currentStream;
   });
   console.log({ signalAnswer: callState.call?.signal });
@@ -52,6 +54,8 @@ function* callUser({ payload }: ActionRedux) {
 
   // Sự kiện này không được gọi khi partners bấm nút trả lời
   peer.on("stream", (currentStream) => {
+    console.log({ currentStream });
+
     payload.userVideo.current.srcObject = currentStream;
   });
 
