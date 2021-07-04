@@ -46,7 +46,7 @@ const Call = () => {
   }, []);
   useEffect(() => {
     if (call.stream && id) {
-      handleClickCallUser(id);
+      handleClickCallUser();
     }
   }, [call.stream, id]);
   useEffect(() => {
@@ -79,7 +79,7 @@ const Call = () => {
     connectionRef.current = peer;
   }
 
-  function callUser(id: string) {
+  function callUser() {
     const peer = new Peer({ initiator: true, trickle: false, stream: call.stream });
 
     peer.on("signal", (data) => {
@@ -117,9 +117,9 @@ const Call = () => {
     window.location.href = "/message";
   }
 
-  const handleClickCallUser = (id: string) => {
+  const handleClickCallUser = () => {
     // dispatch(callUser(id, userVideo, connectionRef));
-    callUser(id);
+    callUser();
   };
 
   const handleClickHangUp = () => {

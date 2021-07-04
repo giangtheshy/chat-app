@@ -10,10 +10,15 @@ module.exports = (io) => {
     });
 
     socket.on("callUser", async ({ userToCall, signalData, from, name, avatar }) => {
-      io.to(await userCtl.getSocket(userToCall)).emit("callUser", { signal: signalData, from, name, avatar });
+      // const idSocket = await userCtl.getSocket(userToCall)
+      const idSocket = userToCall
+      io.to(idSocket).emit("callUser", { signal: signalData, from, name, avatar });
     });
     socket.on("callEnded", async ({ to }) => {
-      socket.to(await userCtl.getSocket(to)).emit("callEnded");
+
+      // const idSocket = await userCtl.getSocket(to)
+      const idSocket = to
+      socket.to(idSocket).emit("callEnded");
     })
     socket.on("answerCall", (data) => {
       io.to(data.to).emit("callAccepted", data.signal)
