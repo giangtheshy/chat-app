@@ -31,30 +31,30 @@ const Call = () => {
       connectionRef.current.destroy();
       window.location.href = "/message";
     });
-    socket?.on("redirect", () => {
-      history.push("/call?accept=true");
-    });
+    // socket?.on("redirect", () => {
+    //   history.push("/call?accept=true");
+    // });
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((currentStream) => {
       dispatch(setCall({ stream: currentStream }));
 
       myVideo.current.srcObject = currentStream;
     });
-    return () => {
-      socket?.off("callEnded");
-      socket?.off("redirect");
-    };
+    // return () => {
+    //   socket?.off("callEnded");
+    //   socket?.off("redirect");
+    // };
   }, []);
-  useEffect(() => {
-    if (call.stream && id) {
-      handleClickCallUser();
-    }
-  }, [call.stream, id]);
-  useEffect(() => {
-    if (answer) {
-      socket?.emit("redirect", { to: call.call?.from });
-      handleClickAnswer();
-    }
-  }, [answer, id]);
+  // useEffect(() => {
+  //   if (call.stream && id) {
+  //     handleClickCallUser();
+  //   }
+  // }, [call.stream, id]);
+  // useEffect(() => {
+  //   if (answer) {
+
+  //     handleClickAnswer();
+  //   }
+  // }, [answer, id]);
 
   function answerCall() {
     dispatch(setCall({ callAccepted: true }));
@@ -129,6 +129,7 @@ const Call = () => {
   };
   const handleClickAnswer = () => {
     // dispatch(answerCall(userVideo, connectionRef));
+    // socket?.emit("redirect", { to: call.call?.from });
     answerCall();
   };
   return (
@@ -143,6 +144,12 @@ const Call = () => {
           <FiPhoneOff />
         </button>
       )}
+      <button className="hang-up" onClick={handleClickCallUser}>
+        <FiPhoneOff /> Call
+      </button>
+      <button className="hang-up" onClick={handleClickAnswer}>
+        <FiPhoneOff /> Answer Call
+      </button>
     </div>
   );
 };
