@@ -8,7 +8,7 @@ import Home from "./pages/Home/Home";
 import Call from "./pages/Call/Call";
 import SideBar from "./components/SideBar/SideBar";
 import Chart from "./pages/Chart/Chart";
-import Application from "./pages/App/Application";
+import Friend from "./pages/Friend/Friend";
 import Notify from "./pages/Notify/Notify";
 import Profile from "./pages/Profile/Profile";
 import Message from "./pages/Message/Message";
@@ -21,6 +21,7 @@ import { getUser, setLogin, setToken } from "./store/actions/user.action";
 import { FiPhoneCall } from "react-icons/fi";
 import Avatar from "./components/Custom/Avatar/Avatar";
 import { ENTRY_POINT } from "./apis/axios";
+import { getFriends } from "./store/actions/friend.action";
 
 const socket = io(ENTRY_POINT, { path: "/api/v1/sockjs-node" });
 
@@ -38,7 +39,13 @@ const App = () => {
     socket.on("callUser", ({ from, name: callerName, signal, avatar, uid }) => {
       dispatch(setCall({ call: { isReceivingCall: true, from, name: callerName, signal, avatar, uid } }));
     });
-
+    socket.on("request-friend", (res) => {
+      alert(res.message);
+    });
+    socket.on("add-friend", ({ message }) => {
+      dispatch(getFriends());
+      alert(message);
+    });
     dispatch(setCall({ socket }));
     return () => {
       socket.off("callUser");
@@ -82,7 +89,7 @@ const App = () => {
               <Route path="/message" component={Message} />
               <Route path="/call" component={Call} />
               <Route path="/chart" component={Chart} />
-              <Route path="/application" component={Application} />
+              <Route path="/friend" component={Friend} />
               <Route path="/notify" component={Notify} />
               <Route path="/profile" component={Profile} />
               <Route path="/login" component={Login} />

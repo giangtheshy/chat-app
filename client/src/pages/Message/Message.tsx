@@ -5,7 +5,7 @@ import MessagesList from "../../components/SideBar/MessagesList/MessagesList";
 import { User } from "../../types";
 
 const Message = () => {
-  const [selectMessage, setSelectMessage] = useState();
+  const [selectMessage, setSelectMessage] = useState(null);
 
   const handleClickItemMessage = (item: any) => {
     setSelectMessage(item);

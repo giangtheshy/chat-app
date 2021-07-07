@@ -18,3 +18,12 @@ export type User = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type Friend = {
+  _id: string;
+  status: boolean;
+  user: string;
+  friend: { _id: string; name: string; avatar: string };
+  createdAt: string;
+  updatedAt: string;
+};

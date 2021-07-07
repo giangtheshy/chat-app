@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ObjectId = mongoose.Schema.Types.ObjectId
 
 const userSchema = new mongoose.Schema(
   {
@@ -16,7 +17,9 @@ const userSchema = new mongoose.Schema(
     },
     role: { type: Number, default: 0 },
     socket: { type: String, default: "" },
-    online: { type: Boolean, default: false }
+    online: { type: Boolean, default: false },
+    // friends: [{ isAccepted: { type: Boolean, default: false }, friend: { type: ObjectId, ref: "users" } }],
+    // requests: [{ friend: { type: ObjectId, ref: "users" } }]
   },
   {
     timestamps: true,

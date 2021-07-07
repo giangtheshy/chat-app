@@ -5,4 +5,4 @@ export const setLogin = () => ({ type: LOGIN });
 export const setToken = (token: string) => ({ type: SET_TOKEN, payload: token });
 
 export const getUser = () => ({ type: GET_USER });
-export const setUser = (user: User) => ({ type: SET_USER,payload:user });
+export const setUser = (user: User) => ({ type: SET_USER, payload: user });

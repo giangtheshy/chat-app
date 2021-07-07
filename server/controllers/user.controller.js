@@ -10,7 +10,7 @@ const { OAuth2 } = google.auth;
 
 const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID);
 
-const CLIENT_URL = process.env.NODE_ENV === "production" ? "https://khumuivietnam.com" : process.env.CLIENT_URL;
+const CLIENT_URL = process.env.NODE_ENV === "production" ? `https://${process.env.CLIENT_URL}` : "http://localhost";
 
 
 const userController = {
@@ -133,7 +133,7 @@ const userController = {
   getUserInfo: async (req, res) => {
     try {
       const socketId = req.params.socketId;
-      const user = await User.findByIdAndUpdate(req.user.id, { socket: socketId, online: true }, { new: true }).select("-password");
+      const user = await User.findByIdAndUpdate(req.user.id, { socket: socketId, online: true }, { new: true }).select("-password -friends");
 
       res.json(user);
     } catch (error) {
@@ -217,6 +217,27 @@ const userController = {
       console.log(error.message);
     }
   },
+  // addFriends: async (req, res) => {
+  //   try {
+  //     const id = req.params.id;
+  //     const user = await User.findById(req.user.id);
+  //     const friend = await User.findByIdAnd
+  //     const newUser = await User.findByIdAndUpdate(req.user.id, { friends: [...user.friends, { friend: id }] }, { new: true });
+
+  //     res.status(200).json(newUser);
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //   }
+  // },
+  // getFriends: async (req, res) => {
+  //   try {
+  //     const user = await User.findById(req.user.id).populate({ path: "friends.friend", select: "-password -createdAt -updatedAt -email -role" });
+
+  //     res.status(200).json(user.friends);
+  //   } catch (error) {
+  //     res.status(500).json({ message: error.message });
+  //   }
+  // },
   getSocket: async (id) => {
     try {
       const user = await User.findById(id);

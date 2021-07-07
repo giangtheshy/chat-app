@@ -12,3 +12,7 @@ export const LOGIN = "LOGIN";
 export const SET_TOKEN = "SET_TOKEN";
 export const GET_USER = "GET_USER";
 export const SET_USER = "SET_USER";
+
+export const SET_FRIENDS = "SET_FRIENDS";
+export const SET_REQUESTS = "SET_REQUESTS";
+export const GET_FRIENDS = "GET_FRIENDS";

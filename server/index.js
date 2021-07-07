@@ -17,6 +17,7 @@ const io = require("socket.io")(server, {
 const connection = require('./database/connection');
 const socketIO = require('./routes/socket')
 const userRoute = require('./routes/user.route');
+const friendRoute = require('./routes/friend.route');
 
 const PORT = process.env.PORT || 5000
 
@@ -35,7 +36,16 @@ socketIO(io)
 app.get('/api/v1', (req, res) => {
   res.status(200).send("Welcome to backend zê")
 })
+app.all("*", (req, res, next) => {
+  try {
+    req.io = io
+    next()
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/friend", friendRoute);
 
 connection
   .then(() => server.listen(PORT, () => console.log(`Server running on port ${PORT}`)))

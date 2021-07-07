@@ -9,6 +9,8 @@ interface Props {
 }
 const Chat: React.FC<Props> = ({ item }) => {
   const history = useHistory();
+
+  if (!item) return <div className="chat empty"></div>;
   return (
     <div className="chat">
       <div className="chat-header">

@@ -2,7 +2,8 @@ import React from "react";
 import Logo from "../Custom/Logo/Logo";
 import "./SideBar.scss";
 import { TiHomeOutline } from "react-icons/ti";
-import { RiAppsLine, RiMessage3Line, RiNotification2Line, RiPieChartLine } from "react-icons/ri";
+import { HiOutlineUsers } from "react-icons/hi";
+import { RiMessage3Line, RiNotification2Line, RiPieChartLine } from "react-icons/ri";
 import { useHistory } from "react-router-dom";
 import Avatar from "../Custom/Avatar/Avatar";
 import { RootState } from "../../store/reducers";
@@ -22,8 +23,8 @@ const SideBar = () => {
         <li className="item" onClick={() => history.push("/message")}>
           <RiMessage3Line />
         </li>
-        <li className="item" onClick={() => history.push("/application")}>
-          <RiAppsLine />
+        <li className="item" onClick={() => history.push("/friend")}>
+          <HiOutlineUsers />
         </li>
         <li className="item" onClick={() => history.push("/chart")}>
           <RiPieChartLine />
