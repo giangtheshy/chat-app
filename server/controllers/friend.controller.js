@@ -43,7 +43,7 @@ const friendCtl = {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  },
+  }
 }
 
 const convertIdToUnique = (id1, id2) => {

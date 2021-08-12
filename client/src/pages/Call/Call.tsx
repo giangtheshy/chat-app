@@ -52,7 +52,28 @@ const Call = () => {
     setIsCall(true);
     dispatch(setCall({ callAccepted: true }));
 
-    const peer = new Peer({ initiator: false, trickle: false, stream: call.stream });
+    const peer = new Peer({
+      initiator: false,
+      trickle: false,
+      stream: call.stream,
+      config: {
+        iceServers: [
+          { urls: ["stun:hk-turn1.xirsys.com"] },
+          {
+            username: "ux2wTRV69C-BBZMnJrDgw_BzTj5Yyn0H5_9ufL9zxUw9MbkaTIYr4JOMLwj6g81VAAAAAGEU0j9naWFuZ3RoZXNoeQ==",
+            credential: "a6f15664-fb41-11eb-bd31-0242ac120004",
+            urls: [
+              "turn:hk-turn1.xirsys.com:80?transport=udp",
+              "turn:hk-turn1.xirsys.com:3478?transport=udp",
+              "turn:hk-turn1.xirsys.com:80?transport=tcp",
+              "turn:hk-turn1.xirsys.com:3478?transport=tcp",
+              "turns:hk-turn1.xirsys.com:443?transport=tcp",
+              "turns:hk-turn1.xirsys.com:5349?transport=tcp",
+            ],
+          },
+        ],
+      },
+    });
 
     peer.on("signal", (data) => {
       call.socket?.emit("answerCall", { signal: data, to: call.call?.from });
@@ -68,7 +89,28 @@ const Call = () => {
 
   function handleClickCallUser() {
     setIsCall(true);
-    const peer = new Peer({ initiator: true, trickle: false, stream: call.stream });
+    const peer = new Peer({
+      initiator: true,
+      trickle: false,
+      stream: call.stream,
+      config: {
+        iceServers: [
+          { urls: ["stun:hk-turn1.xirsys.com"] },
+          {
+            username: "ux2wTRV69C-BBZMnJrDgw_BzTj5Yyn0H5_9ufL9zxUw9MbkaTIYr4JOMLwj6g81VAAAAAGEU0j9naWFuZ3RoZXNoeQ==",
+            credential: "a6f15664-fb41-11eb-bd31-0242ac120004",
+            urls: [
+              "turn:hk-turn1.xirsys.com:80?transport=udp",
+              "turn:hk-turn1.xirsys.com:3478?transport=udp",
+              "turn:hk-turn1.xirsys.com:80?transport=tcp",
+              "turn:hk-turn1.xirsys.com:3478?transport=tcp",
+              "turns:hk-turn1.xirsys.com:443?transport=tcp",
+              "turns:hk-turn1.xirsys.com:5349?transport=tcp",
+            ],
+          },
+        ],
+      },
+    });
 
     peer.on("signal", (data) => {
       socket?.emit("callUser", {

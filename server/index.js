@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 5000
 app.use(cors({
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  origin: process.env.NODE_ENV === "production" ? "https://phim-pro-azure.tk" : "http://localhost",
+  origin: process.env.NODE_ENV === "production" ? "https://database-server.ml" : "http://localhost",
 }))
 app.set("trust proxy", 1);
 app.use(cookieParser());

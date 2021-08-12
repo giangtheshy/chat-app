@@ -1,7 +1,7 @@
 import axios from "axios";
 import store from "../store/store";
 
-export const ENTRY_POINT = process.env.NODE_ENV==="production" ?"https://phim-pro-azure.tk":"http://localhost"
+export const ENTRY_POINT = process.env.NODE_ENV === "production" ? "https://database-server.ml" : "http://localhost";
 
 const axiosInstance = axios.create({
   baseURL: `${ENTRY_POINT}/api/v1`,
